@@ -9,3 +9,7 @@ Arduino (Sensor MCU) and Metro M4 (Display Controller).
 - Asynchronous stream stabilization
 - Inter-device timing synchronization
 - Memory-aware LED display optimization
+
+# Results
+![LED1](images/LED1.png)
+![LED2](images/LED2.png)
