@@ -11,5 +11,5 @@ Arduino (Sensor MCU) and Metro M4 (Display Controller).
 - Memory-aware LED display optimization
 
 # Results
-![LED1](images/LED1.png)
-![LED2](images/LED2.png)
+![LED1](images/LED1.jpg)
+![LED2](images/LED2.jpg)
