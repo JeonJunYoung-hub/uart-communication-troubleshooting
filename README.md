@@ -1,29 +1,50 @@
-# UART-Based LED Matrix Visualization System (Troubleshooting & Stabilization)
+# UART-Based LED Matrix Visualization System  
+Communication Synchronization & Real-Time Display Stabilization
 
-Real-time sensor data visualization system using CircuitPython and RGB LED matrix panels.  
-This project focuses on debugging, communication stabilization, and display layout optimization.
-
----
-
-## 🔍 Problem
-
-The RGB LED panels were powered correctly but displayed nothing.
-
-Initial assumptions:
-- Possible GND or voltage issue
-- LED panel hardware failure
-- Shield misconfiguration
-
-After verifying hardware connections and voltage levels (≈4V measured, stable TX at 3.3V),
-the issue was traced back to UART data handling logic.
-
-The hardware was functioning correctly — the problem was in the software layer.
+Real-time environmental data visualization system using CircuitPython and RGB LED Matrix panels.  
+This project focuses on troubleshooting asynchronous UART communication, protocol synchronization between two microcontrollers, and memory-aware display optimization.
 
 ---
 
-## 🧠 Root Cause
+## System Overview
 
-The original implementation parsed incoming UART data immediately using:
+**Architecture**
+
+Sensor MCU (Arduino Nano)  
+→ UART Transmission  
+→ Metro M4 (CircuitPython)  
+→ RGB LED Matrix Panels (128x32)
+
+The system receives structured sensor data over serial communication and renders it in real time on chained LED panels.
+
+---
+
+## Initial Problem
+
+The LED panels powered correctly but displayed nothing.
+
+Hardware debugging confirmed:
+
+- TX voltage stable at 3.3V  
+- Supply voltage stable (~4V measured)  
+- No grounding issues  
+- Shield and panel wiring correct  
+
+The issue was not electrical.  
+The failure originated from UART data handling logic.
+
+---
+
+## Root Cause
+
+The original implementation immediately parsed incoming UART data:
 
 ```python
 data_list = data_string.split(",")
+```
+
+Since UART is asynchronous, data often arrives in incomplete fragments.
+
+Example of partial packet:
+
+25.3,45.2,PM2.
